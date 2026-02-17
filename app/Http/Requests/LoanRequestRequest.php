@@ -25,7 +25,8 @@ class LoanRequestRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'item_name' => 'required|max:255',
+            'loan_date' => 'required|date',
         ];
     }
 

@@ -38,13 +38,19 @@ class LoanRequestCrudController extends CrudController
      * @return void
      */
     protected function setupListOperation()
-    {
-        CRUD::setFromDb(); // set columns from db columns.
+    {    
+        CRUD::with('user');
+        CRUD::addColumn([
+            'name' => 'user.name',
+            'type' => 'relationship',
+            'attribute' => 'name',
+            'label' => 'User',
+        ]);
 
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
+        CRUD::column('item_name');
+        CRUD::column('status');
+        CRUD::column('loan_date');
+        CRUD::column('return_date');
     }
 
     /**
@@ -56,12 +62,8 @@ class LoanRequestCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(LoanRequestRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
-
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
+        CRUD::field('item_name');
+        CRUD::field('loan_date')->type('date');
     }
 
     /**
@@ -73,5 +75,20 @@ class LoanRequestCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function store()
+    {
+        $this->crud->hasAccessOrFail('create');
+        $request = $this->crud->validateRequest();
+        
+        $data = $request->validated();
+        $data['user_id'] = backpack_user()->id;
+        $data['item_name'] = $request->input('item_name');
+        $data['loan_date'] = $request->input('loan_date');
+
+        $item = $this->crud->create($data);
+
+        return $this->crud->performSaveAction($item->getKey());
     }
 }

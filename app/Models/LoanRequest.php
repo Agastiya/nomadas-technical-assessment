@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class LoanRequest extends Model
 {
-    use CrudTrait;
+    use CrudTrait, HasFactory;
+
     protected $table = 'loan_request';
 
     protected $fillable = [
@@ -22,5 +24,10 @@ class LoanRequest extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getStatusAttribute($value)
+    {
+        return ucfirst($value);
     }
 }
