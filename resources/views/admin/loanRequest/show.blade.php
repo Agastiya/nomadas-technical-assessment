@@ -2,7 +2,7 @@
 
 @section('content')
     <script src="https://cdn.tailwindcss.com"></script>
-    <div class="min-h-screen bg-slate-100 py-10">
+    <div id="ticket-print-area" class="min-h-screen bg-slate-100 py-10">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-4 flex items-center justify-between print:hidden">
                 <a href="{{ backpack_url('loan-request') }}"
@@ -89,7 +89,7 @@
                 @if($entry->status == "approved" || $entry->status == "returned")
                     <div class="my-10 border-t-2 border-dashed border-slate-200"></div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 text-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 mb-5 text-center">
                         <div>
                             <p class="mb-10 text-sm text-slate-600">Authorized By</p>
                             <div class="mx-auto w-4/5 border-b border-slate-700"></div>
@@ -122,16 +122,43 @@
 
     <style>
         @media print {
-            .print\:hidden {
-                display: none !important;
-            }
-
-            .main-footer {
-                display: none !important;
+            @page {
+                size: A4;
+                margin: 16mm;
             }
 
             body {
                 background: white !important;
+            }
+
+            .main-footer,
+            .app-header,
+            .app-navbar,
+            .sidebar,
+            .content-header,
+            .breadcrumb,
+            .navbar,
+            .page-header {
+                display: none !important;
+            }
+
+            body * {
+                visibility: hidden;
+            }
+
+            #ticket-print-area,
+            #ticket-print-area * {
+                visibility: visible;
+            }
+
+            #ticket-print-area {
+                position: absolute;
+                inset: 0;
+                margin: 0 auto;
+            }
+
+            .print\:hidden {
+                display: none !important;
             }
         }
     </style>
