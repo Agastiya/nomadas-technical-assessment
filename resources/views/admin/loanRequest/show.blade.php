@@ -57,18 +57,14 @@
                             <div>
                                 <p class="text-xs font-semibold tracking-[0.2em] text-slate-500 uppercase">Status</p>
                                 <div class="mt-2">
-                                    @php
-                                        $isApproved = $entry->status === 'approved';
-                                    @endphp
+                                    @php $isApproved = $entry->status === 'approved'; @endphp
                                     <span
                                         class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide {{ $isApproved ? 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200' : 'bg-amber-100 text-amber-700 ring-1 ring-amber-200' }}">
                                         <span
                                             class="inline-block w-2 h-2 mr-2 rounded-full {{ $isApproved ? 'bg-emerald-500' : 'bg-red-400' }}"></span>
                                         {{ strtoupper($entry->status) }}
                                         @if($entry->status == 'rejected')
-                                            <span class="ml-2 text-xs italic text-red-500">
-                                                ({{ $entry->reason ?? " - " }})
-                                            </span>
+                                            <span class="ml-2 text-xs italic text-red-500">({{ $entry->reason ?? " - " }})</span>
                                         @endif
                                     </span>
                                 </div>
@@ -77,11 +73,10 @@
 
                         <div class="md:w-1/3 flex flex-col items-center md:border-l md:border-slate-200 md:pl-8">
                             <div class="mb-4 text-center">
-                                <p class="text-xs font-semibold tracking-[0.2em] text-slate-500 uppercase">Scan to
-                                    Verify</p>
+                                <p class="text-xs mb-3 font-semibold tracking-[0.2em] text-slate-500 uppercase">Scan to Verify</p>
                                 <div
-                                    class="mt-3 w-40 h-40 flex items-center justify-center bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl">
-                                    <i class="la la-qrcode text-6xl text-slate-500"></i>
+                                    class="mt-3 w-40 h-40 flex items-center justify-center bg-slate-50 border-2 border-dashed border-slate-300">
+                                    {!! $qrCode !!}
                                 </div>
                             </div>
                             <p class="text-xs text-slate-500">

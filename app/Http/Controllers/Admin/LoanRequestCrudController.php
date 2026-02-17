@@ -6,6 +6,7 @@ use App\Http\Requests\LoanRequestRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /**
  * Class LoanRequestCrudController
@@ -92,6 +93,15 @@ class LoanRequestCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function show($id)
+    {
+        $this->crud->hasAccessOrFail('show');
+        $entry = $this->crud->getEntry($id);
+
+        $qrCode = QrCode::size(150)->generate(md5($entry->id));
+        return view('admin.loanRequest.show', compact('entry','qrCode'));
     }
 
     public function store()
