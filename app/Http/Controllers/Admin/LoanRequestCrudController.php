@@ -60,8 +60,13 @@ class LoanRequestCrudController extends CrudController
         CRUD::column('return_date');
 
         CRUD::addButtonFromView('line', 'approve_modal', 'approve_modal', 'end');
-        
+
         CRUD::orderButtons('line', ['approve_modal', 'show', 'update', 'delete']);
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->setShowView('admin.loanRequest.show');
     }
 
     /**
@@ -87,6 +92,11 @@ class LoanRequestCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    // public function show($id)
+    // {
+    //     dd($id);
+    // }
 
     public function store()
     {
