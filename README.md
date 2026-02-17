@@ -71,6 +71,9 @@ This will create the tables and insert some sample data (users and loan requests
 
 ```bash
 php artisan migrate --seed
+
+php artisan db:seed --class LoanRequestSeeder
+
 ```
 
 ---
