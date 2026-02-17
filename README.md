@@ -98,6 +98,14 @@ Log in with the seeded admin user (check the seeders or database for the exact e
 
 ---
 
+## Sample Screenshot
+
+Below is an example of how to show a screenshot of the loan app:
+
+<img src="docs/Screenshot_1.png" alt="Loan App Screenshot" width="400">
+
+---
+
 ## Summary
 
 1. Install PHP and Composer
