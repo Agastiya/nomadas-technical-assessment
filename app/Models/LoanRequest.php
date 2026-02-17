@@ -25,9 +25,4 @@ class LoanRequest extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function getStatusAttribute($value)
-    {
-        return ucfirst($value);
-    }
 }

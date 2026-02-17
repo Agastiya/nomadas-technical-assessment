@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\LoanRequestRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Http\Request;
 
 /**
  * Class LoanRequestCrudController
@@ -46,11 +47,21 @@ class LoanRequestCrudController extends CrudController
             'attribute' => 'name',
             'label' => 'User',
         ]);
-
         CRUD::column('item_name');
-        CRUD::column('status');
+        CRUD::addColumn([
+            'name' => 'status',
+            'type' => 'text',
+            'label' => 'Status',
+            'value' => function ($entry) {
+                return ucfirst($entry->status);
+            },
+        ]);
         CRUD::column('loan_date');
         CRUD::column('return_date');
+
+        CRUD::addButtonFromView('line', 'approve_modal', 'approve_modal', 'end');
+        
+        CRUD::orderButtons('line', ['approve_modal', 'show', 'update', 'delete']);
     }
 
     /**
@@ -90,5 +101,15 @@ class LoanRequestCrudController extends CrudController
         $item = $this->crud->create($data);
 
         return $this->crud->performSaveAction($item->getKey());
+    }
+
+    public function processRequest(Request $request, $id)
+    {
+        $entry = $this->crud->getEntry($id);
+        $entry->status = $request->input('status');
+        $entry->reason = $request->input('reject_reason');
+        $entry->save();
+
+        return response()->json(['success' => true]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\LoanRequestCrudController;
 use Illuminate\Support\Facades\Route;
 
 // --------------------------
@@ -18,6 +19,7 @@ Route::group([
 ], function () { // custom admin routes
     Route::crud('user', 'UserCrudController');
     Route::crud('loan-request', 'LoanRequestCrudController');
+    Route::post('loan/{id}/process-request', [LoanRequestCrudController::class, 'processRequest'])->name('loan.processRequest');
 }); // this should be the absolute last line of this file
 
 /**
