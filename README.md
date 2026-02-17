@@ -102,7 +102,13 @@ Log in with the seeded admin user (check the seeders or database for the exact e
 
 Below is an example of how to show a screenshot of the loan app:
 
-<img src="docs/Screenshot_1.png" alt="Loan App Screenshot" width="400">
+<img src="docs/Screenshot_1.png" alt="List Loan" width="500">
+
+<img src="docs/Screenshot_2.png" alt="Process Request" width="500">
+
+<img src="docs/Screenshot_3.png" alt="Return Request" width="500">
+
+<img src="docs/Screenshot_4.png" alt="Show Page" width="500">
 
 ---
 
