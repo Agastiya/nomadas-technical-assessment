@@ -20,6 +20,7 @@ Route::group([
     Route::crud('user', 'UserCrudController');
     Route::crud('loan-request', 'LoanRequestCrudController');
     Route::post('loan/{id}/process-request', [LoanRequestCrudController::class, 'processRequest'])->name('loan.processRequest');
+    Route::post('loan/{id}/return-request', [LoanRequestCrudController::class, 'returnRequest'])->name('loan.returnRequest');
 }); // this should be the absolute last line of this file
 
 /**

@@ -21,6 +21,11 @@ class LoanRequest extends Model
         'reason',
     ];
 
+    protected $casts = [
+        'loan_date' => 'date',
+        'return_date' => 'date',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

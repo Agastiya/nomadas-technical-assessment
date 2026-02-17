@@ -60,8 +60,9 @@ class LoanRequestCrudController extends CrudController
         CRUD::column('return_date');
 
         CRUD::addButtonFromView('line', 'approve_modal', 'approve_modal', 'end');
+        CRUD::addButtonFromView('line', 'return_modal', 'return_modal', 'end');
 
-        CRUD::orderButtons('line', ['approve_modal', 'show', 'update', 'delete']);
+        CRUD::orderButtons('line', ['approve_modal', 'return_modal', 'show', 'update', 'delete']);
     }
 
     protected function setupShowOperation()
@@ -93,11 +94,6 @@ class LoanRequestCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
-    // public function show($id)
-    // {
-    //     dd($id);
-    // }
-
     public function store()
     {
         $this->crud->hasAccessOrFail('create');
@@ -121,5 +117,15 @@ class LoanRequestCrudController extends CrudController
         $entry->save();
 
         return response()->json(['success' => true]);
+    }
+
+    public function returnRequest(Request $request, $id) {
+
+        $entry = $this->crud->getEntry($id);
+        $entry->status = 'returned';
+        $entry->return_date = $request->input('return_date');
+        $entry->save();
+
+        return response()->json(['success' => true]);   
     }
 }
